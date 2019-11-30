@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AspNetDBModelStoreContainer" CdmEntityContainer="DBModel">
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="Asp.NetDBModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="category" ColumnName="category" />
+          <ScalarProperty Name="manufacturer" ColumnName="manufacturer" />
+          <ScalarProperty Name="supplier" ColumnName="supplier" />
+          <ScalarProperty Name="price" ColumnName="price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

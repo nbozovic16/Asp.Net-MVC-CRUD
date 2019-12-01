@@ -51,9 +51,8 @@
             @Html.DisplayFor(modelItem => item.price)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            <a class="btn btn-primary btn-sm" onclick="Edit('@Url.Action("AddOrEdit", "Product", new { id = item.id})')"><i class="fa fa-pencil fa-lg"></i></a>
+            <a class="btn btn-danger btn-sm"><i class="fa fa-trash fa-lg"></i></a>
         </td>
     </tr>
 }

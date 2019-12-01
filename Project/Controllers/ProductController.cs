@@ -1,6 +1,7 @@
 ﻿using Project.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -34,6 +35,13 @@ namespace Project.Controllers
         public ActionResult AddOrEdit(int id = 0)
         {
             Product prd = new Product();
+            if(id != 0)
+            {
+                using (DBModel db = new DBModel())
+                {
+                    prd = db.Products.Where(x => x.id == id).FirstOrDefault<Product>();
+                }
+            }
             return View(prd);
         }
 
@@ -44,8 +52,16 @@ namespace Project.Controllers
             {
                 using (DBModel db = new DBModel())
                 {
-                    db.Products.Add(prd);
-                    db.SaveChanges();
+                    if(prd.id == 0)
+                    {
+                        db.Products.Add(prd);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        db.Entry(prd).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
                 return Json(new { success = false, html = GlobalClass.RenderRazorViewToString(this, "ViewAll", GetAllProduct()), message = "Submitted Successfully" }, JsonRequestBehavior.AllowGet);
             }

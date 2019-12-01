@@ -38,9 +38,22 @@ namespace Project.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddOrEdit()
+        public ActionResult AddOrEdit(Product prd)
         {
-            return View();
+            try
+            {
+                using (DBModel db = new DBModel())
+                {
+                    db.Products.Add(prd);
+                    db.SaveChanges();
+                }
+                return Json(new { success = false, html = GlobalClass.RenderRazorViewToString(this, "ViewAll", GetAllProduct()), message = "Submitted Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

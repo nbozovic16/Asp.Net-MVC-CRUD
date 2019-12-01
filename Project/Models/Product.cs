@@ -11,10 +11,12 @@ namespace Project.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Product
     {
         public int id { get; set; }
+        [Required(ErrorMessage ="This field is required.")]
         public string name { get; set; }
         public string description { get; set; }
         public string category { get; set; }

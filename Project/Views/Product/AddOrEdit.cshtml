@@ -5,7 +5,7 @@
     Layout = null;
 }
 
-@using (Html.BeginForm("AddOrEdit", "Product", FormMethod.Post, new {enctype = "multipart/form-data", onSubmit = "return jQueryAjaxPost(this);"}))
+@using (Html.BeginForm("AddOrEdit", "Product", FormMethod.Post, new { datarestUrl = Url.Action("AddOrEdit", "Product")  }))
 {
     @Html.AntiForgeryToken()
 <div class="row">

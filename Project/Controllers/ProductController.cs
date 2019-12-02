@@ -31,7 +31,7 @@ namespace Project.Controllers
             }
         }
 
-        //Insert-edit operation
+        //Inset and edit operation
         public ActionResult AddOrEdit(int id = 0)
         {
             Product prd = new Product();
@@ -45,6 +45,7 @@ namespace Project.Controllers
             return View(prd);
         }
 
+        //continued
         [HttpPost]
         public ActionResult AddOrEdit(Product prd)
         {
@@ -52,18 +53,39 @@ namespace Project.Controllers
             {
                 using (DBModel db = new DBModel())
                 {
-                    if(prd.id == 0)
+                    if (prd.id == 0)
                     {
-                        db.Products.Add(prd);
+                        db.Products.Add(prd); //insert operation
                         db.SaveChanges();
                     }
                     else
                     {
-                        db.Entry(prd).State = EntityState.Modified;
+                        db.Entry(prd).State = EntityState.Modified; //edit operation
                         db.SaveChanges();
                     }
                 }
-                return Json(new { success = false, html = GlobalClass.RenderRazorViewToString(this, "ViewAll", GetAllProduct()), message = "Submitted Successfully" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "ViewAll", GetAllProduct()), message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        //Delete function
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                using (DBModel db = new DBModel())
+                {
+                    Product prd = db.Products.Where(x => x.id == id).FirstOrDefault<Product>();
+                    db.Products.Remove(prd);
+                    db.SaveChanges();
+                }
+                return Json(new { success = true, html = GlobalClass.RenderRazorViewToString(this, "ViewAll", GetAllProduct()), message = "Delited Successfully" }, JsonRequestBehavior.AllowGet);
             }
 
             catch(Exception ex)
